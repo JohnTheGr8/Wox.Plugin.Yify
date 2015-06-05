@@ -1,0 +1,12 @@
+﻿{
+    "ID":"25B212E13AAA44C3A30CEE1B0F713812",
+    "ActionKeyword":"yts",
+    "Name":"Wox.Plugin.Yify",
+    "Description":"Yify for Wox",
+    "Author":"Ioannis G. (@JohnTheGr8)",
+    "Version":"1.0.0",
+    "Language":"csharp",
+    "Website":"https://github.com/JohnTheGr8/Wox.Plugin.Yify",
+	
+    "ExecuteFileName":"Wox.Plugin.Yify.dll"
+}
