@@ -13,6 +13,8 @@ namespace Wox.Plugin.Yify
         
         private YifyClient _client;
 
+        private bool _displayingMovie;
+
         public void Init(PluginInitContext context)
         {
             _context = context;
@@ -22,6 +24,12 @@ namespace Wox.Plugin.Yify
         public List<Result> Query(Query query)
         {
             var results = new List<Result>();
+
+            if (_displayingMovie)
+            {
+                _displayingMovie = false;
+                return results;
+            }
 
             var s = query.GetAllRemainingParameter();
             if (string.IsNullOrEmpty(s)) return results;
@@ -44,7 +52,16 @@ namespace Wox.Plugin.Yify
 
         private void QueryMovie(MovieInfo info)
         {
-            var results = new List<Result>();
+            // Add the movie on top
+            var results = new List<Result>()
+                {
+                    new Result()
+                        {
+                            Title = info.TitleLong,
+                            SubTitle = String.Join(", ", info.Genres.ToArray()),
+                            IcoPath = GetCover(info.SmallCoverImage, info.Title),
+                        }
+                };
             // Add all available torrents
             results.AddRange(
                 info.Torrents
@@ -59,6 +76,7 @@ namespace Wox.Plugin.Yify
                 );
 
             var q = new Query("yts " + info.Title);
+            _displayingMovie = true;
             _context.API.ChangeQuery(q.RawQuery, false);
             _context.API.PushResults(q, _context.CurrentPluginMetadata, results);
         }
@@ -95,4 +113,3 @@ namespace Wox.Plugin.Yify
         }
     }
 }
-
