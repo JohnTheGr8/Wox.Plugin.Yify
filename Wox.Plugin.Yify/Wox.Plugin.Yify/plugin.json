@@ -7,6 +7,6 @@
     "Version":"1.0.0",
     "Language":"csharp",
     "Website":"https://github.com/JohnTheGr8/Wox.Plugin.Yify",
-	
+	"IcoPath":"icon.png",
     "ExecuteFileName":"Wox.Plugin.Yify.dll"
 }

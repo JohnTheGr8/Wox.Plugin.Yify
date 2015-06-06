@@ -71,7 +71,8 @@ namespace Wox.Plugin.Yify
                             SubTitle =
                                 string.Format("Size: {0} - Seeds: {1} - Peers: {2}", x.Size, x.Seeds,
                                               x.Peers),
-                            Action = e => _context.API.ShellRun(x.MagnetUrl)
+                            Action = e => _context.API.ShellRun(x.MagnetUrl),
+                            IcoPath = _context.CurrentPluginMetadata.FullIcoPath
                         })
                 );
 
@@ -98,8 +99,11 @@ namespace Wox.Plugin.Yify
                 if (!File.Exists(path))
                     new WebClient().DownloadFile(new Uri(href), path);
             }
-            // suppress, no biggie
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // fallback to plugin icon
+                return _context.CurrentPluginMetadata.FullIcoPath;
+            }
 
             return path;
         }
